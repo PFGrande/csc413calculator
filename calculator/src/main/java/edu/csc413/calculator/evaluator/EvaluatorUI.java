@@ -32,13 +32,13 @@ public class EvaluatorUI extends JFrame implements ActionListener {
     }
 
     public EvaluatorUI() {
-        setLayout(new BorderLayout());
+        setLayout(new BorderLayout()); //affects evaluatorUI, setLayout is a function of jFrame
         this.expressionTextField.setPreferredSize(new Dimension(600, 50));
         this.expressionTextField.setFont(new Font("Courier", Font.BOLD, 24));
         this.expressionTextField.setHorizontalAlignment(JTextField.CENTER);
 
-        add(expressionTextField, BorderLayout.NORTH);
-        expressionTextField.setEditable(false);
+        add(expressionTextField, BorderLayout.NORTH); //add is a function of JFrame
+        expressionTextField.setEditable(false); //can not be edited by the user
 
         add(buttonPanel, BorderLayout.CENTER);
         buttonPanel.setLayout(new GridLayout(5, 4));
@@ -74,8 +74,15 @@ public class EvaluatorUI extends JFrame implements ActionListener {
      * @param actionEventObject Event object generated when a
      *                    button is pressed.
      */
-    public void actionPerformed(ActionEvent actionEventObject) {
-
+    public void actionPerformed(ActionEvent actionEventObject) { //every time button is pressed
+        //actionEventObject is the event triggered after pressing the button
+        //toString method has 2 scenarios 1 for string the other for int?
+        //object is parent of every object
+        //cmd = button being pressed, .getActionCommand method returns the button being pressed
+        //explore the API
+        //String commandClicked = actionEventObject.getActionCommand();
+        //this.expressionTextField.setText(this.expressionField.getText() + commandClicked);
+        //getSource returns the object the button represents, can also be used to determine input
 
     }
 }

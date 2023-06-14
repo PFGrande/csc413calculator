@@ -19,7 +19,8 @@ public abstract class Operator {
     // operators.put( "-", new SubtractionOperator() );
 
     //Static to not have to create multiple instances of the hashmap containing the different operators.
-    public static HashMap<String, Operator> operatorHashMap; //Token, operator
+    public static HashMap<String, Operator> operatorHashMap = new HashMap<>(); //Token, operator
+//    Operator.operatorHashMap.put("+", new AdditionOperator());
 
 
     /**
@@ -45,7 +46,7 @@ public abstract class Operator {
      * @return reference to a Operator instance.
      */
     public static Operator getOperator(String token) {
-        return null;
+        return operatorHashMap.get(token);
     }
 
     
@@ -56,6 +57,14 @@ public abstract class Operator {
      * Think about what happens if we add more operators.
      */
     public static boolean check(String token) {
-        return false;
+        //UI does not allow characters other than the operators and operands to be used.
+        //This means there is no need to check if the token is a character that is not an int or operator.
+        try {
+            Integer.parseInt(token);
+            return false; // token is integer
+        } catch (NumberFormatException invalidOperand) {
+            return true; // token is NOT integer
+        }
+
     }
 }

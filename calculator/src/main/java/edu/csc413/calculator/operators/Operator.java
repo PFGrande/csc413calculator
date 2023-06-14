@@ -22,6 +22,12 @@ public abstract class Operator {
     private static HashMap<String, Operator> operators = new HashMap<>(); //Token, operator
     static {
         operators.put("+", new AddOperator());
+        operators.put("-", new SubtractOperator());
+        operators.put("*", new MultiplyOperator());
+        operators.put("/", new DivideOperator());
+        operators.put("^", new PowerOperator());
+        //Pontentially a class deadlock, will look into it. Believe it's because
+        //the parent class is needed to initialize the children class
     }
 
 

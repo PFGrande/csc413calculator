@@ -19,8 +19,10 @@ public abstract class Operator {
     // operators.put( "-", new SubtractionOperator() );
 
     //Static to not have to create multiple instances of the hashmap containing the different operators.
-    public static HashMap<String, Operator> operatorHashMap = new HashMap<>(); //Token, operator
-//    Operator.operatorHashMap.put("+", new AdditionOperator());
+    private static HashMap<String, Operator> operators = new HashMap<>(); //Token, operator
+    static {
+        operators.put("+", new AddOperator());
+    }
 
 
     /**
@@ -46,7 +48,7 @@ public abstract class Operator {
      * @return reference to a Operator instance.
      */
     public static Operator getOperator(String token) {
-        return operatorHashMap.get(token);
+        return Operator.operators.get(token);
     }
 
     

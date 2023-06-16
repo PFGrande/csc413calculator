@@ -6,7 +6,7 @@ import edu.csc413.calculator.evaluator.Operand;
 public class PowerOperator extends Operator {
     final int priority = 3;
 
-    PowerOperator() {
+    public PowerOperator() {
     }
 
     @Override

@@ -42,6 +42,7 @@ public class Evaluator {
             throw new InvalidTokenException(expressionToken); // not an operator, throw exception
           }
 
+          // if token is operator:
 
           // TODO Operator is abstract - these two lines will need to be fixed:
           // The Operator class should contain an instance of a HashMap,

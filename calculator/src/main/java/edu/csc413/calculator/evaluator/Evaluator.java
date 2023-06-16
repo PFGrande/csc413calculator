@@ -31,7 +31,7 @@ public class Evaluator {
 
 
 
-    while ( this.expressionTokenizer.hasMoreTokens() ) {
+    while ( this.expressionTokenizer.hasMoreTokens() ) {// runs out of tokens before finishing calculation
       // filter out spaces & move to next token
       if ( !( expressionToken = this.expressionTokenizer.nextToken() ).equals( " " )) {
         // check if token is an operand
@@ -41,8 +41,10 @@ public class Evaluator {
           if ( ! Operator.check( expressionToken )) { // check if token is operator
             throw new InvalidTokenException(expressionToken); // not an operator, throw exception
           }
-
           // if token is operator:
+//          if (operatorStack.isEmpty()) { // places first operator in stack
+//            operatorStack.push(Operator.getOperator(expressionToken));
+//          }
 
           // TODO Operator is abstract - these two lines will need to be fixed:
           // The Operator class should contain an instance of a HashMap,
@@ -50,24 +52,35 @@ public class Evaluator {
           // skeleton for an example.
           Operator newOperator = Operator.getOperator(expressionToken); // gets operator object based on token
           // new Operator();
-        
-          while (operatorStack.peek().priority() >= newOperator.priority() ) {
+
+          while (!operatorStack.isEmpty() && operatorStack.peek().priority() >= newOperator.priority() && operandStack.size() >= 2) { // at least 2 operands necessary
             // note that when we eval the expression 1 - 2 we will
             // push the 1 then the 2 and then do the subtraction operation
             // This means that the first number to be popped is the
             // second operand, not the first operand - see the following code
             Operator operatorFromStack = operatorStack.pop();
             Operand operandTwo = operandStack.pop();
+            System.out.println(operandTwo);
             Operand operandOne = operandStack.pop();
+            System.out.println(operandOne);
             Operand result = operatorFromStack.execute( operandOne, operandTwo );
+            System.out.println("My result = " + result);
             operandStack.push( result );
           }
 
-          operatorStack.push( newOperator );
+          operatorStack.push( newOperator ); //runs is operator is empty
         }
       }
     }
 
+    // tokenizer is empty, stacks contain operands and operators
+    while (!operatorStack.isEmpty() && operandStack.size() >= 2) {
+      Operator operatorFromStack = operatorStack.pop();
+      Operand operandTwo = operandStack.pop();
+      Operand operandOne = operandStack.pop();
+      Operand result = operatorFromStack.execute(operandOne, operandTwo);
+      operandStack.push(result);
+    }
 
     // Control gets here when we've picked up all of the tokens; you must add
     // code to complete the evaluation - consider how the code given here
@@ -78,6 +91,6 @@ public class Evaluator {
     // that is, we should keep evaluating the operator stack until it is empty;
     // Suggestion: create a method that processes the operator stack until empty.
 
-    return 0;
+    return operandStack.pop().getValue(); //returns the value calculated by the expression
   }
 }

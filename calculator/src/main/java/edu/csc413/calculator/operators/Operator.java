@@ -77,7 +77,7 @@ public abstract class Operator {
 
             // check if token is an operator
             // token is an invalid character
-            return operators.containsKey(token); // token is an operator
+            return operators.containsKey(token); // token is an operator, might cause problem with parentheses
 
 
         }

@@ -58,14 +58,13 @@ public class Evaluator {
             // push the 1 then the 2 and then do the subtraction operation
             // This means that the first number to be popped is the
             // second operand, not the first operand - see the following code
-            Operator operatorFromStack = operatorStack.pop();
-            Operand operandTwo = operandStack.pop();
-            System.out.println(operandTwo);
-            Operand operandOne = operandStack.pop();
-            System.out.println(operandOne);
-            Operand result = operatorFromStack.execute( operandOne, operandTwo );
-            System.out.println("My result = " + result);
-            operandStack.push( result );
+//            Operator operatorFromStack = operatorStack.pop();
+//            Operand operandTwo = operandStack.pop();
+//            Operand operandOne = operandStack.pop();
+//            Operand result = operatorFromStack.execute( operandOne, operandTwo );
+            //evaluate()
+            //operandStack.push( result );
+            operandStack.push( evaluate() );
           }
 
           operatorStack.push( newOperator ); //runs is operator is empty
@@ -75,11 +74,11 @@ public class Evaluator {
 
     // tokenizer is empty, stacks contain operands and operators
     while (!operatorStack.isEmpty() && operandStack.size() >= 2) {
-      Operator operatorFromStack = operatorStack.pop();
-      Operand operandTwo = operandStack.pop();
-      Operand operandOne = operandStack.pop();
-      Operand result = operatorFromStack.execute(operandOne, operandTwo);
-      operandStack.push(result);
+//      Operator operatorFromStack = operatorStack.pop();
+//      Operand operandTwo = operandStack.pop();
+//      Operand operandOne = operandStack.pop();
+//      Operand result = operatorFromStack.execute(operandOne, operandTwo);
+      operandStack.push(evaluate());
     }
 
     // Control gets here when we've picked up all of the tokens; you must add
@@ -92,5 +91,13 @@ public class Evaluator {
     // Suggestion: create a method that processes the operator stack until empty.
 
     return operandStack.pop().getValue(); //returns the value calculated by the expression
+  }
+
+  public Operand evaluate() {
+    Operator operatorFromStack = operatorStack.pop();
+    Operand operandTwo = operandStack.pop();
+    Operand operandOne = operandStack.pop();
+    return operatorFromStack.execute(operandOne, operandTwo);
+
   }
 }

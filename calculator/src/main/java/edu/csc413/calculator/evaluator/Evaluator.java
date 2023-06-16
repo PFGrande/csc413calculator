@@ -17,11 +17,11 @@ public class Evaluator {
     operatorStack = new Stack<>();
   }
 
-  public int evaluateExpression(String expression ) throws InvalidTokenException {
+  public int evaluateExpression(String expression) throws InvalidTokenException {
     String expressionToken;
 
     // The 3rd argument is true to indicate that the delimiters should be used
-    // as tokens, too. But, we'll need to remember to filter out spaces.
+    // as tokens too. But, we'll need to remember to filter out spaces.
     this.expressionTokenizer = new StringTokenizer( expression, this.delimiters, true );
 
     // initialize operator stack - necessary with operator priority schema
@@ -32,14 +32,14 @@ public class Evaluator {
 
 
     while ( this.expressionTokenizer.hasMoreTokens() ) {
-      // filter out spaces
+      // filter out spaces & move to next token
       if ( !( expressionToken = this.expressionTokenizer.nextToken() ).equals( " " )) {
         // check if token is an operand
-        if ( Operand.check( expressionToken )) {
+        if ( Operand.check( expressionToken )) { // check if token is operand
           operandStack.push( new Operand( expressionToken ));
         } else {
-          if ( ! Operator.check( expressionToken )) {
-            throw new InvalidTokenException(expressionToken);
+          if ( ! Operator.check( expressionToken )) { // check if token is operator
+            throw new InvalidTokenException(expressionToken); // not an operator, throw exception
           }
 
 
@@ -47,7 +47,8 @@ public class Evaluator {
           // The Operator class should contain an instance of a HashMap,
           // and values will be instances of the Operators.  See Operator class
           // skeleton for an example.
-          Operator newOperator = new Operator();
+          Operator newOperator = Operator.getOperator(expressionToken); // gets operator object based on token
+          // new Operator();
         
           while (operatorStack.peek().priority() >= newOperator.priority() ) {
             // note that when we eval the expression 1 - 2 we will

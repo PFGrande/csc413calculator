@@ -70,8 +70,16 @@ public abstract class Operator {
         try {
             Integer.parseInt(token);
             return false; // token is integer
-        } catch (NumberFormatException invalidOperand) {
-            return true; // token is NOT integer
+        } catch (NumberFormatException invalidOperand) { //token not integer
+//            if (token.length() > 1) {
+//                return false;
+//            }
+
+            // check if token is an operator
+            // token is an invalid character
+            return operators.containsKey(token); // token is an operator
+
+
         }
 
     }

@@ -93,7 +93,7 @@ public class Evaluator {
     return operandStack.pop().getValue(); //returns the value calculated by the expression
   }
 
-  public Operand evaluate() {
+  public Operand evaluate() { // returns the calculation between two operands and an operator from the stack
     Operator operatorFromStack = operatorStack.pop();
     Operand operandTwo = operandStack.pop();
     Operand operandOne = operandStack.pop();

@@ -35,25 +35,24 @@ public class Evaluator {
         // check if token is an operand
         if ( Operand.check( expressionToken )) { // check if token is operand
           operandStack.push( new Operand( expressionToken ));
-
+          
         } else {
           if (expressionToken.equals("(")) { // add parenthesis operator into operator stack
             operatorStack.push( Operator.getOperator(expressionToken));
-
+            
             continue;
-
+            
           } else if ( expressionToken.equals(")")) { // evaluate expression within parentheses
             while (!operatorStack.isEmpty() && operatorStack.peek().priority() != 0) { // priority of 0 indicates parentheses
               operandStack.push(evaluate());
-
+              
             }
             operatorStack.pop(); // remove remaining left parenthesis
-
+            
             continue;
-
+            
           } else if ( ! Operator.check( expressionToken )) { // check if token is operator
             throw new InvalidTokenException(expressionToken); // not an operator, throw exception
-            
           }
 
           // TODO Operator is abstract - these two lines will need to be fixed:

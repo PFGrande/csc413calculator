@@ -4,6 +4,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 
 public class EvaluatorUI extends JFrame implements ActionListener {
 
@@ -83,6 +85,32 @@ public class EvaluatorUI extends JFrame implements ActionListener {
         //String commandClicked = actionEventObject.getActionCommand();
         //this.expressionTextField.setText(this.expressionField.getText() + commandClicked);
         //getSource returns the object the button represents, can also be used to determine input
+
+        System.out.println(actionEventObject.getActionCommand());
+        // display current text + button pressed
+
+        if (actionEventObject.getActionCommand().equals("=")) {
+            try {
+                Evaluator evaluator = new Evaluator();
+                int actualResult = evaluator.evaluateExpression(expressionTextField.getText());
+                expressionTextField.setText(Integer.toString(actualResult));
+            } catch (InvalidTokenException ex) {
+                System.out.println(ex.getMessage());
+            }
+
+        } else {
+            expressionTextField.setText(expressionTextField.getText() + actionEventObject.getActionCommand());
+        }
+
+
+        //plan:
+        /*
+        * display expression on screen
+        * as a string, save the expression then run it through the evaluator after = is pressed
+        *
+        *
+        *
+        * */
 
     }
 }

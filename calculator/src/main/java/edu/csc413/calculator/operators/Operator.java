@@ -71,13 +71,15 @@ public abstract class Operator {
             Integer.parseInt(token);
             return false; // token is integer
         } catch (NumberFormatException invalidOperand) { //token not integer
-//            if (token.length() > 1) {
-//                return false;
-//            }
 
             // check if token is an operator
             // token is an invalid character
-            return operators.containsKey(token); // token is an operator, might cause problem with parentheses
+
+//            if (token.compareTo(")") == 0 || token.compareTo("(") == 0) { // parenthesis operator
+//                return true;
+//            }
+
+            return operators.containsKey(token); // token is an operator in the hashmap
 
 
         }

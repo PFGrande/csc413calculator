@@ -10,7 +10,7 @@ public class Evaluator {
   private Stack<Operand> operandStack;
   private Stack<Operator> operatorStack;
   private StringTokenizer expressionTokenizer;
-  private final String delimiters = " +/*-^";
+  private final String delimiters = " +/*-^()";
 
   public Evaluator() {
     operandStack = new Stack<>();
@@ -38,7 +38,9 @@ public class Evaluator {
         if ( Operand.check( expressionToken )) { // check if token is operand
           operandStack.push( new Operand( expressionToken ));
         } else {
-          if ( ! Operator.check( expressionToken )) { // check if token is operator
+          if (expressionToken.equals("(") || expressionToken.equals(")")) {
+            continue; // do what is inside the parentheses
+          } else if ( ! Operator.check( expressionToken )) { // check if token is operator
             throw new InvalidTokenException(expressionToken); // not an operator, throw exception
           }
           // if token is operator:
@@ -52,6 +54,17 @@ public class Evaluator {
           // skeleton for an example.
           Operator newOperator = Operator.getOperator(expressionToken); // gets operator object based on token
           // new Operator();
+
+
+          // run while the operator at the top of the stack is larger than the newOperator. If the newOperator is smaller, place it
+          // in the stack for its execution to be queued.
+
+          // Parenthesis seem to be a priority of 0, meaning they will be executed last?
+          // I understand now that the priority 0 refers to the result within the parenthesis.
+          // The expression within the is evaluated first parenthesis, then the result is placed into the expression
+          // resulting in the result having a priority of 0.
+          // example: 5 + (9+3), 9+3 is evaluated first, but at the end 5 + 12 must also be evaluated.
+
 
           while (!operatorStack.isEmpty() && operatorStack.peek().priority() >= newOperator.priority() && operandStack.size() >= 2) { // at least 2 operands necessary
             // note that when we eval the expression 1 - 2 we will

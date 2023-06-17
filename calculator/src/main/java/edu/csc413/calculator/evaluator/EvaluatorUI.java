@@ -1,5 +1,7 @@
 package edu.csc413.calculator.evaluator;
 
+import edu.csc413.calculator.operators.Operator;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -98,6 +100,27 @@ public class EvaluatorUI extends JFrame implements ActionListener {
                 } catch (InvalidTokenException ex) {
                     System.out.println(ex.getMessage());
                 }
+                break;
+            case "CE":
+                char availableOperators[] = {'+', '-', '*', '/', '^', '(', ')'};
+                int lastOperIndex = -1;
+                if (expressionTextField.getText().length() > 0) {
+                    for (char operator:availableOperators) { // worst case: latest operator near front of expression
+                        if ((lastOperIndex = expressionTextField.getText().lastIndexOf(operator)) != -1) {
+                            break;
+                        }
+                    }
+
+                    if (lastOperIndex != -1) { // delete up until latest operator
+                        expressionTextField.setText(expressionTextField.getText().substring(0, lastOperIndex + 1));
+                        // up until means after it?
+                        // maybe deleting AT the operator would be more useful, otherwise,
+                        // anything before the last operator unable to be deleted
+                    }
+                }
+                break;
+            case "C": // clear text field
+                expressionTextField.setText("");
                 break;
             default:
                 expressionTextField.setText(expressionTextField.getText() + actionEventObject.getActionCommand());

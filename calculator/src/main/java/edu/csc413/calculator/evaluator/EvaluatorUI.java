@@ -88,7 +88,7 @@ public class EvaluatorUI extends JFrame implements ActionListener {
         //this.expressionTextField.setText(this.expressionField.getText() + commandClicked);
         //getSource returns the object the button represents, can also be used to determine input
 
-        System.out.println(actionEventObject.getActionCommand());
+//        System.out.println(actionEventObject.getActionCommand());
         // display current text + button pressed
 
         switch (actionEventObject.getActionCommand()) {
@@ -128,14 +128,10 @@ public class EvaluatorUI extends JFrame implements ActionListener {
         }
 
 
-        //plan:
-        /*
+        /* plan:
         * display expression on screen
         * as a string, save the expression then run it through the evaluator after = is pressed
-        *
-        *
-        *
-        * */
+        */
 
     }
 }

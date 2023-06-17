@@ -38,8 +38,19 @@ public class Evaluator {
         if ( Operand.check( expressionToken )) { // check if token is operand
           operandStack.push( new Operand( expressionToken ));
         } else {
-          if (expressionToken.equals("(") || expressionToken.equals(")")) {
-            continue; // do what is inside the parentheses
+          if (expressionToken.equals("(")) {
+            operatorStack.push( Operator.getOperator(expressionToken));
+            continue;
+
+          } else if ( expressionToken.equals(")")) {
+            // do what is inside the parentheses
+            while (!operatorStack.isEmpty() && operatorStack.peek().priority() != 0) { // priority of 0 indicates parentheses
+              operandStack.push(evaluate());
+
+            }
+
+            operatorStack.pop(); // remove remaining left parenthesis
+            continue;
           } else if ( ! Operator.check( expressionToken )) { // check if token is operator
             throw new InvalidTokenException(expressionToken); // not an operator, throw exception
           }

@@ -26,6 +26,7 @@ public abstract class Operator {
         operators.put("*", new MultiplyOperator());
         operators.put("/", new DivideOperator());
         operators.put("^", new PowerOperator());
+        operators.put("(", new ParenthesesOperator());
         //Pontentially a class deadlock, will look into it. Believe it's because
         //the parent class is needed to initialize the children class
     }

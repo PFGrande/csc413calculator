@@ -10,7 +10,7 @@ public class Evaluator {
   private Stack<Operand> operandStack;
   private Stack<Operator> operatorStack;
   private StringTokenizer expressionTokenizer;
-  private final String delimiters = " +/*-^()";
+  private final String delimiters = " +/*-^()"; // added parentheses
 
   public Evaluator() {
     operandStack = new Stack<>();
@@ -29,79 +29,58 @@ public class Evaluator {
     // the usual mathematical operators - "+-*/" - should be less than the priority
     // of the usual operators
 
-
-
     while ( this.expressionTokenizer.hasMoreTokens() ) {// runs out of tokens before finishing calculation
       // filter out spaces & move to next token
       if ( !( expressionToken = this.expressionTokenizer.nextToken() ).equals( " " )) {
         // check if token is an operand
         if ( Operand.check( expressionToken )) { // check if token is operand
           operandStack.push( new Operand( expressionToken ));
+
         } else {
-          if (expressionToken.equals("(")) {
+          if (expressionToken.equals("(")) { // add parenthesis operator into operator stack
             operatorStack.push( Operator.getOperator(expressionToken));
+
             continue;
 
-          } else if ( expressionToken.equals(")")) {
-            // do what is inside the parentheses
+          } else if ( expressionToken.equals(")")) { // evaluate expression within parentheses
             while (!operatorStack.isEmpty() && operatorStack.peek().priority() != 0) { // priority of 0 indicates parentheses
               operandStack.push(evaluate());
 
             }
-
             operatorStack.pop(); // remove remaining left parenthesis
+
             continue;
+
           } else if ( ! Operator.check( expressionToken )) { // check if token is operator
             throw new InvalidTokenException(expressionToken); // not an operator, throw exception
+            
           }
-          // if token is operator:
-//          if (operatorStack.isEmpty()) { // places first operator in stack
-//            operatorStack.push(Operator.getOperator(expressionToken));
-//          }
 
           // TODO Operator is abstract - these two lines will need to be fixed:
           // The Operator class should contain an instance of a HashMap,
           // and values will be instances of the Operators.  See Operator class
           // skeleton for an example.
           Operator newOperator = Operator.getOperator(expressionToken); // gets operator object based on token
-          // new Operator();
-
 
           // run while the operator at the top of the stack is larger than the newOperator. If the newOperator is smaller, place it
           // in the stack for its execution to be queued.
 
-          // Parenthesis seem to be a priority of 0, meaning they will be executed last?
-          // I understand now that the priority 0 refers to the result within the parenthesis.
-          // The expression within the is evaluated first parenthesis, then the result is placed into the expression
-          // resulting in the result having a priority of 0.
-          // example: 5 + (9+3), 9+3 is evaluated first, but at the end 5 + 12 must also be evaluated.
-
-
+          // empty out stacks
           while (!operatorStack.isEmpty() && operatorStack.peek().priority() >= newOperator.priority() && operandStack.size() >= 2) { // at least 2 operands necessary
             // note that when we eval the expression 1 - 2 we will
             // push the 1 then the 2 and then do the subtraction operation
             // This means that the first number to be popped is the
             // second operand, not the first operand - see the following code
-//            Operator operatorFromStack = operatorStack.pop();
-//            Operand operandTwo = operandStack.pop();
-//            Operand operandOne = operandStack.pop();
-//            Operand result = operatorFromStack.execute( operandOne, operandTwo );
-            //evaluate()
-            //operandStack.push( result );
             operandStack.push( evaluate() );
           }
 
-          operatorStack.push( newOperator ); //runs is operator is empty
+          operatorStack.push( newOperator ); //runs if operator is empty
         }
       }
     }
 
     // tokenizer is empty, stacks contain operands and operators
     while (!operatorStack.isEmpty() && operandStack.size() >= 2) {
-//      Operator operatorFromStack = operatorStack.pop();
-//      Operand operandTwo = operandStack.pop();
-//      Operand operandOne = operandStack.pop();
-//      Operand result = operatorFromStack.execute(operandOne, operandTwo);
       operandStack.push(evaluate());
     }
 
